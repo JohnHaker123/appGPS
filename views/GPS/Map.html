@@ -1,0 +1,163 @@
+<!-- <!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Básico con Leaflet</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+    <script src="https://unpkg.com/esri-leaflet@2.2.3/dist/esri-leaflet.js"
+        integrity="sha512-YZ6b5bXRVwipfqul5krehD9qlbJzc6KOGXYsDjU9HHXW2gK57xmWl2gU6nAegiErAqFXhygKIsWPKbjLPXVb2g=="
+        crossorigin=""></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.1.0/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.1.0/dist/MarkerCluster.Default.css" />
+
+    <script src="https://unpkg.com/leaflet.markercluster@1.1.0/dist/leaflet.markercluster.js"></script>
+</head>
+
+<body>
+    <div id="mimapa" style="width: absolute; height: 100vh; z-index: 1;"></div>
+</body>
+<script>
+    var center = [24.2521612, -101.555143];
+    var mymap = L.map("mimapa").setView(center, 6);
+    var markers = L.markerClusterGroup();
+    var markerGroup2 = L.layerGroup().addTo(mymap);
+    var OpenStreetMap_Mapnik = L.tileLayer(
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            maxZoom: 19,
+            attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }
+    ).addTo(mymap);
+
+    var markers = []; // Array para almacenar todos los marcadores
+
+    async function addMarker(lat, lng, speed) {
+        await deleteMarker(); // Elimina los marcadores existentes
+        var valorUbi = [lat, lng];
+        var marker = L.marker(valorUbi).addTo(mymap); // Crea un nuevo marcador
+        markers.push(marker); // Agrega el marcador al array
+        mymap.setView(valorUbi, 17);
+    }
+
+    async function deleteMarker() {
+        for (var i = 0; i < markers.length; i++) {
+            mymap.removeLayer(markers[i]); // Elimina cada marcador del mapa
+        }
+        markers = []; // Limpia el array de marcadores
+    }
+
+    window.addMarker = addMarker;
+</script>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa Básico con Leaflet</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+  <script src="https://unpkg.com/esri-leaflet@2.2.3/dist/esri-leaflet.js"
+    integrity="sha512-YZ6b5bXRVwipfqul5krehD9qlbJzc6KOGXYsDjU9HHXW2gK57xmWl2gU6nAegiErAqFXhygKIsWPKbjLPXVb2g=="
+    crossorigin=""></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.1.0/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.1.0/dist/MarkerCluster.Default.css" />
+  <script src="https://unpkg.com/leaflet.markercluster@1.1.0/dist/leaflet.markercluster.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+
+<body>
+  <!-- <div id="mimapa"
+    style="width: absolute; height: 100vh; position: absolute; top: 0; left: 0; bottom: 0; right: 0; z-index: 0;"></div>
+  <div style="display: flex; z-index: 1; justify-content: flex-end;">
+    <div id="chart_div" style="width: absolute; height: 500px;"></div>
+  </div> -->
+  <label for="">Cargando Mapa....</label>
+
+</body>
+<script>
+  // var center = [24.2521612, -101.555143];
+  // var mymap = L.map("mimapa").setView(center, 6);
+  // var markers = L.markerClusterGroup();
+  // var markerGroup2 = L.layerGroup().addTo(mymap);
+  // var OpenStreetMap_Mapnik = L.tileLayer(
+  //   "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+  //   {
+  //     maxZoom: 19,
+  //     attribution:
+  //       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  //   }
+  // ).addTo(mymap);
+
+  // var markers = [];
+
+  // async function addMarker(lat, lng, speed) {
+  //   await deleteMarker();
+  //   await drawChart(speed);
+  //   var valorUbi = [lat, lng];
+  //   var marcador = L.icon({ iconUrl: "https://tracing.romidamx.com/appOperador/img/camionR.png", iconSize: [40, 40], iconAnchor: [32, 50] });
+  //   var marker = L.marker(valorUbi, { icon: marcador }).addTo(mymap);
+  //   // var marker = L.marker(valorUbi).addTo(mymap);
+  //   markers.push(marker);
+  //   mymap.setView(valorUbi, 17);
+  // }
+
+  // async function deleteMarker() {
+  //   for (var i = 0; i < markers.length; i++) {
+  //     mymap.removeLayer(markers[i]);
+  //   }
+  //   markers = [];
+  // }
+
+  // window.addMarker = addMarker;
+
+  // google.charts.load('current', { 'packages': ['gauge'] });
+  // google.charts.setOnLoadCallback(drawChart);
+
+  // async function drawChart(speed) {
+
+  //   var data = google.visualization.arrayToDataTable([
+  //     ['Label', 'Value'],
+  //     ['Velocidad', 0],
+  //   ]);
+
+  //   var options = {
+  //     width: 400, height: 150,
+  //     redFrom: 90, redTo: 100,
+  //     yellowFrom: 75, yellowTo: 90,
+  //     minorTicks: 5
+  //   };
+
+  //   var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
+  //   chart.draw(data, options);
+  //   data.setValue(0, 1, speed);
+  //   chart.draw(data, options);
+  // }
+</script>
+
+</html>

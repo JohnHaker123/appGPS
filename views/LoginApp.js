@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dimensions, Keyboard, View, Text, TouchableOpacity, TextInput, ImageBackground, ActivityIndicator, ScrollView } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import useOrientation from '../hooks/useOrientation';
@@ -16,10 +16,32 @@ const iOperador = require('../img/operador.png');
 
 const { height, width } = Dimensions.get('window');
 
-
+async function verifSession (navigation){
+    let dataUser = await SecureStore.getItemAsync('User');
+    if(dataUser == null || dataUser == ''){
+        console.log("No Existe Usuario");
+        return true;
+    }else{
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Home' }],
+            });
+    }
+    // return dataUser
+}
 
 const LoginView = () => {
     const navigation = useNavigation();
+
+    useEffect(() => {
+        verifSession(navigation).then(dataSession => {
+            // setData(dataSession);
+            setSession(dataSession)
+        });
+    }, []);
+
+
+    
     const orientacion = useOrientation();
     if (height <= 800 && width <= 400) {
         if (orientacion == 'PORTRAIT') {
@@ -43,6 +65,9 @@ const LoginView = () => {
     const [inputs, setInputs] = useState(false);
     const [Message, setMessage] = useState("");
 
+    //Pagina
+    const [session, setSession] = useState(false);
+
     const handleSubmit = async () => {
         Keyboard.dismiss();
         setData("");
@@ -57,6 +82,7 @@ const LoginView = () => {
             return;
         } else {
             setLoginLoader(true);
+
             try {
                 let datos = JSON.stringify(await loginService.login(data))
                 let user = await Json.extraerJson(`${datos}`);
@@ -71,16 +97,16 @@ const LoginView = () => {
                     }, 3000);
                     return;
                 } else {
-                    
+
                     let userId = user[0]['id'];
                     let userName = user[0]['user'];
                     let nameOperador = user[0]['nombre'];
-                    await SecureStore.setItemAsync('id',`${userId}`);
-                    await SecureStore.setItemAsync('User',`${userName}`);
-                    await SecureStore.setItemAsync('nombreOperador',`${nameOperador}`);
+                    await SecureStore.setItemAsync('id', `${userId}`);
+                    await SecureStore.setItemAsync('User', `${userName}`);
+                    await SecureStore.setItemAsync('nombreOperador', `${nameOperador}`);
 
-                    await SecureStore.setItemAsync('Unidades','');
-                    await SecureStore.setItemAsync('tipoParadas','');
+                    await SecureStore.setItemAsync('Unidades', '');
+                    await SecureStore.setItemAsync('tipoParadas', '');
                     setTimeout(() => {
                         navigation.reset({
                             index: 0,
@@ -118,47 +144,47 @@ const LoginView = () => {
                         {errorMessage &&
                             // <LoginAlert style={estilos.alert} alertMessage={Message} />
                             <View style={estilos.inputs}>
-                            <Text style={estilos.alert}>{Message}</Text>
+                                <Text style={estilos.alert}>{Message}</Text>
                             </View>
 
                         }
                         <ScrollView>
-                        {inputs !== true ? (
-                            <View style={estilos.inputs}>
-                                <Text style={estilos.subtitulo}>
-                                    Usuario
-                                </Text>
-                                <TextInput
-                                    placeholder="Usuario"
-                                    onChangeText={(text) => setData({ ...data, user: text })}
-                                    value={data.user}
-                                    name='user'
-                                    style={[
-                                        estilos.input,
-                                        { borderWidth: 3, borderColor: borderColor },
-                                    ]}
-                                />
-                                <Text style={estilos.subtitulo}>
-                                    Password
-                                </Text>
-                                <TextInput
-                                    secureTextEntry
-                                    placeholder="Password"
-                                    onChangeText={(text) => setData({ ...data, pass: text })}
-                                    value={data.pass}
-                                    style={[
-                                        estilos.input,
-                                        { borderWidth: 3, borderColor: borderColor2 },
-                                    ]}
-                                />
-                                <TouchableOpacity
-                                    onPress={handleSubmit}
-                                    style={estilos.boton}
-                                >
-                                    <Text style={estilos.textBoton}>Login</Text>
-                                </TouchableOpacity>
-                            </View>
-                        ) : (<Text></Text>)}
+                            {inputs !== true ? (
+                                <View style={estilos.inputs}>
+                                    <Text style={estilos.subtitulo}>
+                                        Usuario
+                                    </Text>
+                                    <TextInput
+                                        placeholder="Usuario"
+                                        onChangeText={(text) => setData({ ...data, user: text })}
+                                        value={data.user}
+                                        name='user'
+                                        style={[
+                                            estilos.input,
+                                            { borderWidth: 3, borderColor: borderColor },
+                                        ]}
+                                    />
+                                    <Text style={estilos.subtitulo}>
+                                        Password
+                                    </Text>
+                                    <TextInput
+                                        secureTextEntry
+                                        placeholder="Password"
+                                        onChangeText={(text) => setData({ ...data, pass: text })}
+                                        value={data.pass}
+                                        style={[
+                                            estilos.input,
+                                            { borderWidth: 3, borderColor: borderColor2 },
+                                        ]}
+                                    />
+                                    <TouchableOpacity
+                                        onPress={handleSubmit}
+                                        style={estilos.boton}
+                                    >
+                                        <Text style={estilos.textBoton}>Login</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            ) : (<Text></Text>)}
                         </ScrollView>
                         <ImageBackground source={iOperador} resizeMode="cover" style={estilos.imgOperadorP}></ImageBackground>
 
@@ -167,7 +193,7 @@ const LoginView = () => {
             )}
         </View>
 
-        
+
 
     );
 }

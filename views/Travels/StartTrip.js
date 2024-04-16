@@ -109,11 +109,11 @@ async function datosUser(navigation) {
         conteo: Conteo,
     };
     } else {
-    let ubicacion = await obtenerUbicacion();
+    // let ubicacion = await obtenerUbicacion();
     // let lat = ubicacion.coords.latitude;
     // let lng = ubicacion.coords.longitude;
 
-    console.log(ubicacion);
+    // console.log(ubicacion);
 
     let lat = 0;
     let lng = 0;

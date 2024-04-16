@@ -20,7 +20,7 @@ async function verifSession (navigation){
     let dataUser = await SecureStore.getItemAsync('User');
     if(dataUser == null || dataUser == ''){
         console.log("No Existe Usuario");
-        return true;
+        return true;    
     }else{
             navigation.reset({
                 index: 0,

@@ -15,7 +15,7 @@ async function cerrarSession() {
     await SecureStore.deleteItemAsync('id');
     await SecureStore.deleteItemAsync('User');
     await SecureStore.deleteItemAsync('nombreOperador');
-}
+}      
 
 function MyTabs(props) {
     const navigation = useNavigation();
